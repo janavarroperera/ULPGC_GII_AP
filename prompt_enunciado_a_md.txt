@@ -1,0 +1,27 @@
+Te adjunto el enunciado de un ejercicio de Algoritmos y Programación,
+exportado como PDF desde Moodle (Ctrl+P → Guardar como PDF).
+
+Conviértelo a un archivo .md fiel al original:
+
+1. Ignora el ruido de impresión: cabeceras/pies de página repetidos en cada
+   hoja, numeración "X of Y", timestamps, breadcrumbs y menús de Moodle
+   (Descripción/Entrega/Editar/Ver entrega), pies institucionales.
+
+2. Conserva TODO el contenido real: contexto, objetivo, formato de
+   entrada/salida, ejemplos, y explicaciones paso a paso con diagramas
+   (descríbelos en texto si hace falta, sin omitir la información que
+   contienen).
+
+3. NO incluyas el código de main.py/solve.py/utils.py (u otros ficheros)
+   aunque aparezcan en el PDF — esos ficheros se descargan aparte con el
+   botón "Descargar" y no forman parte del enunciado a transcribir.
+
+4. Estructura el resultado con encabezados (##): Contexto, Objetivo,
+   Formato de entrada, Formato de salida, Ejemplo de caso de prueba,
+   Tarea del alumno.
+
+5. Si detectas algo que parezca incompleto o cortado, dímelo antes de
+   darme el resultado final.
+
+6. Genera el archivo .md real (no solo mostrarlo en el chat) listo para
+   guardar en la carpeta de la práctica correspondiente del repositorio.
