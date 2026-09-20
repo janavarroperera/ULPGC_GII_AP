@@ -20,5 +20,5 @@ def solve(input_list):
         - No imprimir resultados dentro de esta función.
         - Devolver un número entero.
     """
-    pass
+    print(input_list)
 
