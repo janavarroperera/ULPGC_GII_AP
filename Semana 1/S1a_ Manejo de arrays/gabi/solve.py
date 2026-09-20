@@ -20,5 +20,45 @@ def solve(input_list):
         - No imprimir resultados dentro de esta función.
         - Devolver un número entero.
     """
-    print(input_list)
 
+    bottom = int(input_list[2][0])
+    top = int(input_list[3])
+
+    padre:str = input_list[0][0:-1]
+
+    padre = padre.split(",")
+
+    padre_lista = []
+    for numero in padre:
+        padre_lista.append(int(numero))
+
+
+    madre:str = input_list[1][0:-1]
+
+    madre = madre.split(",")
+
+    madre_lista = []
+    for numero in madre:
+        madre_lista.append(int(numero))
+
+    print(padre_lista)
+    print(madre_lista)
+
+    hijo = [None] * len(padre_lista)
+    print(hijo)
+    print(top)
+    print(bottom)
+
+    current = bottom
+    while current < top:
+        hijo[current] = padre_lista[current]
+        current += 1
+    print(hijo)
+
+    i = top
+    j = top
+    while None in hijo:
+        if hijo[i] == None:
+            
+
+    print(hijo)
