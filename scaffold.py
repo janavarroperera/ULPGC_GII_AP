@@ -83,6 +83,8 @@ def crear_ejercicio(semana: int, letra: str, nombre: str, archivos: list,
         if origen_enun.exists():
             nombre_md = f"S{semana}{letra}_{nombre.replace(' ', '_')}.md"
             shutil.copy(origen_enun, carpeta_ejercicio / nombre_md)
+            for persona in PERSONAS:
+                shutil.copy(origen_enun, carpeta_ejercicio / persona / nombre_md)
         else:
             print(f"⚠ No encuentro el enunciado {origen_enun}")
 
@@ -113,6 +115,10 @@ def _procesar_par(zip_path: Path, md_path: Path, carpeta_semana: Path):
 
     # Copiar el enunciado dentro, conservando su nombre original
     shutil.copy(md_path, carpeta_ejercicio / md_path.name)
+
+    # Copiar también el enunciado a cada carpeta de persona
+    for persona in PERSONAS:
+        shutil.copy(md_path, carpeta_ejercicio / persona / md_path.name)
 
     # Borrar los originales una vez todo está copiado
     zip_path.unlink()
