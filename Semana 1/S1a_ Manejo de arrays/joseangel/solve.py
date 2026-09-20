@@ -44,8 +44,8 @@ def solve(input_list):
     hijo = [None] * len(padre)
     hijo[lower_bound:upper_bound] = padre[lower_bound:upper_bound] 
 
-    i = upper_bound
-    j = upper_bound 
+    i = upper_bound % len(hijo)
+    j = upper_bound % len(madre)
     while None in hijo:
         if hijo[i] is None:
             if madre[j] not in hijo:
