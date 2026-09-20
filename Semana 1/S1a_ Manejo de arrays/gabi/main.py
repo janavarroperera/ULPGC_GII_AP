@@ -1,7 +1,8 @@
 from utils import open_test_file, close_test_file, get_line, get_n_lines
 from solve import solve
 
-TEST_FILE = None
+TEST_FILE = "test.txt"
+print(TEST_FILE)
 
 input_source = open_test_file(TEST_FILE)
 
