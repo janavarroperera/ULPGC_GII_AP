@@ -29,6 +29,10 @@ def solve(input_list):
                 first = char
             elif char.isdigit():
                 last = char
+
+        if first == "":
+            result += 0
+            continue
         if last == "":
             last = first
         result += int(first+last)
