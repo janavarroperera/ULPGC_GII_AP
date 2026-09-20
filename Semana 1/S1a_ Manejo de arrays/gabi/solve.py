@@ -41,24 +41,31 @@ def solve(input_list):
     for numero in madre:
         madre_lista.append(int(numero))
 
-    print(padre_lista)
-    print(madre_lista)
-
     hijo = [None] * len(padre_lista)
-    print(hijo)
-    print(top)
-    print(bottom)
 
     current = bottom
     while current < top:
         hijo[current] = padre_lista[current]
         current += 1
-    print(hijo)
 
-    i = top
-    j = top
+    i = top % len(hijo)
+    j = top % len(madre_lista)
     while None in hijo:
         if hijo[i] == None:
-            
+            if madre_lista[j] not in hijo:
+                hijo[i] = madre_lista[j]
+                if i == len(hijo) -1:
+                    i = 0
+                else:
+                    i += 1
+            if j == len(madre_lista) -1:
+                j = 0
+            else:
+                j += 1
+        else:
+            if i == len(hijo) -1:
+                i = 0
+            else:
+                i += 1
 
-    print(hijo)
+    return hijo
