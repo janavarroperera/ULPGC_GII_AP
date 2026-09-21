@@ -20,5 +20,24 @@ def solve(input_list):
         - No imprimir resultados dentro de esta función.
         - Devolver un número entero.
     """
-    pass
+
+
+    result = 0
+    for string in input_list:
+        first = ""
+        last = ""
+        for char in string:
+            if char.isdigit() and first == "":
+                first = char
+            elif char.isdigit():
+                last = char
+
+        if first == "":
+            result += 0
+            continue
+        if last == "":
+            last = first
+        result += int(first+last)
+
+    return result
 
