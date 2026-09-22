@@ -35,4 +35,10 @@ def build_graph(edges_list, num_nodes, num_edges):
     # conviértelos a enteros y añade la arista correspondiente.
 
     # Devuelve el grafo construido.
-    pass
+
+    graph = nx.Graph()
+
+    for edge in edges_list:
+        graph.add_edge(int(edge[0]), int(edge[2]))
+
+    return graph
