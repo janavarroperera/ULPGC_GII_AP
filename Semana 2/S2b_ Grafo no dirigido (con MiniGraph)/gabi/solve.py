@@ -38,11 +38,15 @@ def build_graph(edges_list, num_nodes, num_edges):
 
     # Recorre edges_list, separa cada línea en dos extremos u y v,
     # conviértelos a enteros y añade la arista correspondiente.
+    edges = []
+
+    for line in edges_list:
+        edges.append(line.strip().split())
 
     # Devuelve el grafo construido.
 
 
-    for edge in edges_list:
-        graph.add_edge(int(edge[0]), int(edge[2]))
+    for edge in edges:
+        graph.add_edge(int(edge[0]), int(edge[1]))
 
     return graph
