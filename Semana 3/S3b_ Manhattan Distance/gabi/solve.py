@@ -21,4 +21,44 @@ def solve(items):
 
     No debe leer datos ni imprimir: main.py gestiona la entrada y la salida.
     """
-    pass
+    print(items)
+
+    position = [0, 0]
+
+    # If looking north, y++, south y--, east x++, west x--
+    heading = "N"
+
+    for command in items:
+        command = command.strip()
+        # check and do the turn:
+        if command[0] == "R":
+            if heading == "N":
+                heading = "E"
+            elif heading == "E":
+                heading = "S"
+            elif heading == "S":
+                heading = "W"
+            else:
+                heading = "N"
+        else:
+            if heading == "N":
+                heading = "W"
+            elif heading == "W":
+                heading = "S"
+            elif heading == "S":
+                heading = "E"
+            else:
+                heading = "N"
+
+        # Move verticaly
+        if heading == "N":
+            position[1] += int(command[1:])
+        elif heading == "S":
+            position[1] -= int(command[1:])
+        elif heading == "E":
+            position[0] += int(command[1:])
+        else:
+            position[0] -= int(command[1:])
+
+    return abs(position[0]) + abs(position[1])
+

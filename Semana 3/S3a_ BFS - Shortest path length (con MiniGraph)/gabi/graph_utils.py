@@ -18,4 +18,21 @@ def build_graph(edges_list, num_nodes, num_edges):
 
     No lee entrada ni imprime resultados; main.py gestiona la E/S.
     """
-    pass
+    # Construir lista de vertices:
+    edges = []
+    for edge in edges_list:
+        edges.append(edge.strip().split())
+
+    graph = nx.Graph()
+
+    #Construir grafo:
+    i = 0
+    while i < num_nodes:
+        graph.add_node(i+1)
+        i += 1
+    
+
+    for edge in edges:
+        graph.add_edge(int(edge[0]), int(edge[1]))
+
+    return graph
