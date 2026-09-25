@@ -27,6 +27,22 @@ def bfs_path_length(graph, first_node):
         distance[node] = infinite
 
     # solve it here!
-    # ...
+    
+    visibles = []
+    queue = Queue()
+    visibles.append(first_node)
+    queue.enqueue(first_node)
+    distance[first_node] = 0
+    
+    while queue.isEmpty() == False:
+        node = queue.dequeue()
+        for neighbor in graph.neighbors(node):
+            if neighbor not in visibles:
+                queue.enqueue(neighbor)
+                visibles.append(neighbor)
+                distance[neighbor] = distance[node] + 1
+        
+        
+
 
     return distance
