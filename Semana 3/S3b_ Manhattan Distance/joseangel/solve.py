@@ -21,4 +21,26 @@ def solve(items):
 
     No debe leer datos ni imprimir: main.py gestiona la entrada y la salida.
     """
-    pass
+    items_clean = []
+    for item in items:
+        move = (item.strip()[0], int(item.strip()[1:]))
+        items_clean.append(move)
+
+    pos = [0, 0]
+    looking = 0
+    for move in items_clean:
+        if move[0] == 'R':
+            looking = (looking + 1) % 4
+        else:
+            looking = (looking - 1) % 4
+
+        if looking == 0:
+            pos[1] += move[1]
+        elif looking == 1:
+            pos[0] += move[1]
+        elif looking == 2:
+            pos[1] -= move[1]
+        elif looking == 3:
+            pos[0] -= move[1]
+    
+    return abs(pos[0]) + abs(pos[1])
