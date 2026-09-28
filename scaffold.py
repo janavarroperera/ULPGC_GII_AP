@@ -23,6 +23,7 @@ resto del nombre no coincida, p. ej. "S1a_ Manejo de arrays.zip" y
       (sin la extensión), p. ej. "S1a_ Manejo de arrays"
     - extrae ahí los .py del zip (van sueltos en su raíz)
     - copia esos .py también a las carpetas gabi/ y joseangel/
+    - crea un test.txt vacío en gabi/ y joseangel/
     - copia el .md dentro, conservando su nombre original
     - borra el .zip y el .md originales
 
@@ -44,6 +45,12 @@ PERSONAS = ["gabi", "joseangel"]
 # Prefijo tipo "S1a_", "S12b_", etc. Es lo único que tiene que coincidir
 # entre el zip y el md de un mismo ejercicio.
 PREFIJO_RE = re.compile(r"^(S\d+[a-zA-Z]+_)")
+
+
+def _crear_test(carpeta_persona: Path):
+    # touch con exist_ok=True no pisa el archivo si ya existía
+    # (por ejemplo, si el zip ya traía un test.txt)
+    (carpeta_persona / "test.txt").touch(exist_ok=True)
 
 
 def crear_semanas(inicio: int, fin: int, base: Path):
@@ -76,6 +83,7 @@ def crear_ejercicio(semana: int, letra: str, nombre: str, archivos: list,
         carpeta_persona = carpeta_ejercicio / persona
         carpeta_persona.mkdir(exist_ok=True)
         _copiar_archivos(archivos, carpeta_persona)
+        _crear_test(carpeta_persona)
 
     # Enunciado, renombrado con el patrón SxY_Nombre_del_ejercicio.md
     if enunciado:
@@ -106,12 +114,13 @@ def _procesar_par(zip_path: Path, md_path: Path, carpeta_semana: Path):
 
     archivos_extraidos = [f for f in carpeta_ejercicio.iterdir() if f.is_file()]
 
-    # Copiar esos archivos a cada carpeta de persona
+    # Copiar esos archivos a cada carpeta de persona y crear su test.txt
     for persona in PERSONAS:
         carpeta_persona = carpeta_ejercicio / persona
         carpeta_persona.mkdir(exist_ok=True)
         for f in archivos_extraidos:
             shutil.copy(f, carpeta_persona / f.name)
+        _crear_test(carpeta_persona)
 
     # Copiar el enunciado dentro, conservando su nombre original
     shutil.copy(md_path, carpeta_ejercicio / md_path.name)
