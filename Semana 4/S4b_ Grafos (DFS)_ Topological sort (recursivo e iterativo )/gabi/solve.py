@@ -1,6 +1,6 @@
 import minigraph as nx
 
-def dfs_topological_sort(graph):
+def dfs_topological_sort(graph:nx.DiGraph):
     """
     Compute one topological sort of the given graph.
     """
@@ -30,10 +30,21 @@ def dfs_topological_sort(graph):
         nonlocal N
         #  1. Añade código aqui
         #  ...
+        visibleNodes.add(u)
+
+        for node in graph.neighbors(u):
+            if node not in visibleNodes:
+                dfs(node)
+
+        order[u] = N
+        N -= 1
         
         return
 
     #  2. Añade código también aqui
     #  ...
+    for node in graph.nodes():
+        if node not in visibleNodes:
+            dfs(node)
 
     return order
