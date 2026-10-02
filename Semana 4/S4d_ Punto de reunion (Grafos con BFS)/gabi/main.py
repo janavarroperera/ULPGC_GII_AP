@@ -3,7 +3,7 @@ from solve import solve_punto_reunion
 from utils import open_test_file, close_test_file, get_line
 
 
-test_file = None
+test_file = "test.txt"
 input_source = open_test_file(test_file)
 
 try:
