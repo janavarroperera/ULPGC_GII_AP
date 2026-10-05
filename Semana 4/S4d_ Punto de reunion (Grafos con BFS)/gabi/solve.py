@@ -54,6 +54,9 @@ def solve_punto_reunion(graph:nx.Graph, positions):
         print(distances)
 
     i = 0
-    
+    candidates = []
+    while i < graph.number_of_nodes():
+        ...
+
             
 
