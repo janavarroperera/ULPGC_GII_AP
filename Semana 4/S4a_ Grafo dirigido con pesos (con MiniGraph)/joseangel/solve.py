@@ -15,4 +15,18 @@ def build_digraph_with_weights(edges_list, num_nodes, num_edges):
 
     La función no debe leer datos ni imprimir resultados.
     """
-    pass
+
+    # crea el digrafo
+    graph = nx.DiGraph() 
+
+    # añadir nodos
+    for i in range(1, num_nodes + 1):
+        graph.add_node(i)
+
+    # añadir vertices
+    for edge in edges_list:
+        edge = edge.split()
+        # print(edge[0],edge[1],edge[2][0:-1])
+        graph.add_edge(int(edge[0]), int(edge[1]), int(edge[2]))
+
+    return graph
