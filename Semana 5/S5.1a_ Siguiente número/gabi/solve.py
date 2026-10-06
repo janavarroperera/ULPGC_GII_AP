@@ -30,7 +30,7 @@ def next_number(digits, base):
         if carry == 1 and next_digits[i] == (base - 1):
             next_digits[i] = 0
         elif carry == 1 and next_digits[i] == 0:
-            next_digits[i] = next_digits[-1] + 1
+            next_digits[i] = next_digits[i] + 1
             carry = 0
         i -= 1
 
