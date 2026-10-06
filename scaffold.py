@@ -15,12 +15,17 @@ los .py y el enunciado (.md) uno a uno:
     python scaffold.py ejercicio 1 a "Manejo de arrays" main.py solve.py utils.py --enunciado enunciado.md
 
 MODO 3 - Detección automática: busca en cada carpeta "Semana N" pares
-de un .zip y un .md que compartan el mismo prefijo "SxY_" (aunque el
-resto del nombre no coincida, p. ej. "S1a_ Manejo de arrays.zip" y
-"S1a_Manejo_de_arrays.md"), y para cada par:
+de un .zip y un .md que compartan el mismo prefijo (aunque el resto del
+nombre no coincida). Se aceptan varios formatos de prefijo y se
+normalizan para que casen entre sí:
+
+    S1a_  S12b_  S5.1a_  S5_1a_  S5.2_  S5_2_
+
+p. ej. "S5.1a_ Siguiente número.zip" y "S5_1a_siguiente_numero.md".
+Para cada par:
 
     - crea la carpeta del ejercicio con el mismo nombre que el .zip
-      (sin la extensión), p. ej. "S1a_ Manejo de arrays"
+      (sin la extensión), p. ej. "S5.1a_ Siguiente número"
     - extrae ahí los .py del zip (van sueltos en su raíz)
     - copia esos .py también a las carpetas gabi/ y joseangel/
     - crea un test.txt vacío en gabi/ y joseangel/
@@ -42,9 +47,11 @@ from pathlib import Path
 # Cambia esto si en algún momento cambian las personas del grupo
 PERSONAS = ["gabi", "joseangel"]
 
-# Prefijo tipo "S1a_", "S12b_", etc. Es lo único que tiene que coincidir
-# entre el zip y el md de un mismo ejercicio.
-PREFIJO_RE = re.compile(r"^(S\d+[a-zA-Z]+_)")
+# Prefijo del ejercicio. Acepta, entre otros:
+#   S1a_, S12b_, S5.1a_, S5_1a_, S5.2_, S5_2_
+# Es lo único que tiene que coincidir entre el zip y el md de un mismo
+# ejercicio (tras normalizar "." -> "_" y pasar a minúsculas).
+PREFIJO_RE = re.compile(r"^(S\d+(?:[._]\d+)?[a-zA-Z]*)_")
 
 
 def _crear_test(carpeta_persona: Path):
@@ -100,8 +107,16 @@ def crear_ejercicio(semana: int, letra: str, nombre: str, archivos: list,
 
 
 def _prefijo(nombre_archivo: str):
+    """Devuelve la clave normalizada del prefijo, o None si no tiene.
+
+    "S5.1a_ Siguiente número.zip" -> "s5_1a"
+    "S5_1a_siguiente_numero.md"   -> "s5_1a"
+    "S1a_ Manejo de arrays.zip"   -> "s1a"
+    """
     m = PREFIJO_RE.match(nombre_archivo)
-    return m.group(1) if m else None
+    if not m:
+        return None
+    return m.group(1).replace(".", "_").lower()
 
 
 def _procesar_par(zip_path: Path, md_path: Path, carpeta_semana: Path):
@@ -152,6 +167,11 @@ def procesar_auto(base: Path):
             prefijo = _prefijo(f.name)
             if prefijo:
                 grupos.setdefault(prefijo, []).append(f)
+            elif f.suffix.lower() in (".zip", ".md"):
+                print(
+                    f"⚠ {carpeta_semana.name}: '{f.name}' no tiene un prefijo "
+                    f"tipo SxY_, lo salto"
+                )
 
         for prefijo, ficheros in grupos.items():
             zips = [f for f in ficheros if f.suffix.lower() == ".zip"]
