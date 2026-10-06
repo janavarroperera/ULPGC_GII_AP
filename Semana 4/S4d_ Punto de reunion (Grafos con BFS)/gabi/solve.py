@@ -51,12 +51,30 @@ def solve_punto_reunion(graph:nx.Graph, positions):
 
     for position in positions:
         distances.append(bfs(position))
-        print(distances)
 
-    i = 0
-    candidates = []
-    while i < graph.number_of_nodes():
-        ...
+    candidates = graph.nodes()
+
+    for node in graph.nodes():
+        for dictionary in distances:
+            if dictionary[node] >= inf and node in candidates:
+                candidates.remove(node)
+
+    if len(candidates) == 0:
+        return (-1, -1)
+
+    candidates_max_distances = {}
+
+    for node in candidates:
+        max_distance = 0
+        for distance in distances:
+            if distance[node] > max_distance:
+                max_distance = distance[node]
+        candidates_max_distances[node] = max_distance
+
+    point = min(candidates_max_distances.items(), key=lambda par:par[1])
+
+    return point
+
 
             
 
