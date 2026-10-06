@@ -1,5 +1,6 @@
 # 1. Copia aqui tu solución del primer ejercicio de esta semana
 
+
 def next_number(digits, base):
     """
     :param digits: list containing all the digits of a number 
@@ -25,17 +26,19 @@ def next_number(digits, base):
         next_digits[-1] = 0
     else:
         next_digits[-1] = next_digits[-1] + 1
+        return next_digits
     
     i = len(next_digits) - 2
     while i >= 0:
         if carry == 1 and next_digits[i] == (base - 1):
             next_digits[i] = 0
         elif carry == 1 and next_digits[i] == 0:
-            next_digits[i] = next_digits[-1] + 1
+            next_digits[i] = next_digits[i] + 1
             carry = 0
         i -= 1
 
     return next_digits
+
 
 # ----------------------------------------------------------
 
@@ -45,18 +48,18 @@ class My_Iterator:
     def __init__(self, num_digits, base):
         # Guarda la longitud de cada lista y la base para la iteración.
         self.num_digits = num_digits
-        self.current_digits = [0] * self.num_digits
         self.base = base
+        self.current_digits = [0] * self.num_digits
 
     def is_last_value(self, digits):
         # Indica si todos los dígitos han alcanzado el último valor posible.
-        is_last = True
         for digit in digits:
-            if digit != self.base - 1:
-                is_last = False
-        return is_last
+            if digit != (self.base -1):
+                return False
+        return True
 
     def next(self):
         # Devuelve la combinación actual y prepara la siguiente con next_number.
-        yield self.current_digits
-        self.num_digits = next_number(self.current_digits, self.base)
+        while self.is_last_value(self.current_digits) == False:
+            self.current_digits = next_number(self.current_digits, self.base)
+            yield self.current_digits
