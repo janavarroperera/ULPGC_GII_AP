@@ -11,11 +11,12 @@ def next_number(digits, base):
 
               returns [0, 1, 1, 0]    number 6
     """
+    print(digits)
+    print(base)
 
     next_digits = digits.copy()
 
     # Añade tu código aqui
     # ...
-    
 
     return next_digits
