@@ -8,7 +8,7 @@
 
 from utils import *
 
-test_file    = None
+test_file    = "test.txt"
 input_source = open_test_file (test_file)
 
 # ----------------------------------------------------------------
@@ -19,7 +19,7 @@ num_values = int(first_line[0])
 base       = int(first_line[1])
 
 for j in range(num_values):
-    data = get_line(input_source)
+    data = get_line(input_source).strip()
 
     # Convertimos la string en la lista que contiene
     # el número de entrada.

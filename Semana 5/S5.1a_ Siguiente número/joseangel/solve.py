@@ -15,7 +15,15 @@ def next_number(digits, base):
     next_digits = digits.copy()
 
     # Añade tu código aqui
-    # ...
-    
-
-    return next_digits
+    i = -1
+    while True:
+      try:
+        next_digits[i] += 1
+      except IndexError:
+        return next_digits
+      
+      if next_digits[i] >= base:
+        next_digits[i] = 0
+        i -= 1
+      else: 
+        return next_digits
