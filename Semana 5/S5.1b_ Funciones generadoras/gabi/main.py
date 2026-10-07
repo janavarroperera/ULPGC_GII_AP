@@ -9,7 +9,7 @@
 from utils import *
 
 
-test_file    = None
+test_file    = "test.txt"
 input_source = open_test_file (test_file)
 
 # ----------------------------------------------------------------
