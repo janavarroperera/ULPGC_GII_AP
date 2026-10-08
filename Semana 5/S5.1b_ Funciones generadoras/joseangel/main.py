@@ -9,7 +9,7 @@
 from utils import *
 
 
-test_file    = None
+test_file    = "test.txt"
 input_source = open_test_file (test_file)
 
 # ----------------------------------------------------------------
@@ -21,17 +21,17 @@ base       = int(first_line[1])
 
 
 # Usando la implementacion con generador (yield)
-from solve_yield import My_Iterator
-obj = My_Iterator(num_digits, base)
-for c in obj.next():
-    print(c)
+# from solve_yield import My_Iterator
+# obj = My_Iterator(num_digits, base)
+# for c in obj.next():
+#     print(c)
 
 
 # Usando la implementacion con iterador
-# from solve_iter import My_Iterator
-# obj = My_Iterator(num_digits, base)
-# for c in obj:
-#     print(c)
+from solve_iter import My_Iterator
+obj = My_Iterator(num_digits, base)
+for c in obj:
+    print(c)
 
 # ----------------------------------------------------------------
 # Cerramos el fichero (si lo utilizamos para redireccionar la entrada)
