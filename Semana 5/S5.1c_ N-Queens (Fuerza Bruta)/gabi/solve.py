@@ -20,9 +20,6 @@ def solve(num_queens):
     # solve it here!    
     iterator = My_Iterator(num_queens, num_queens)
     for candidate in iterator.next():
-        #for debugging
-        if candidate == [0, 2, 1, 3]:
-            print("OWO")
         valid = True
         set_candidate = set(candidate)
         if len(set_candidate) != num_queens:
