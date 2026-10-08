@@ -12,26 +12,32 @@ def next_number(digits, base):
               returns [0, 1, 1, 0]    number 6
     """
 
-    next_digits = digits.copy()
+    next_digits = []
 
     # Añade tu código aqui
     # ...
 
     carry = 0
 
-    if next_digits[-1] == (base - 1):
-        carry = 1
-        next_digits[-1] = 0
-    else:
-        next_digits[-1] = next_digits[-1] + 1
-    
-    i = len(next_digits) - 2
-    while i >= 0:
-        if carry == 1 and next_digits[i] == (base - 1):
-            next_digits[i] = 0
-        elif carry == 1 and next_digits[i] == 0:
-            next_digits[i] = next_digits[i] + 1
-            carry = 0
-        i -= 1
+    is_first = True
 
+    for digit in reversed(digits):
+        if is_first:
+            if digit < base -1:
+                next_digits.append(digit+1)
+            else:
+                carry = 1
+                next_digits.append(0)
+            is_first = False
+        else:
+            if carry == 1:
+                if digit + carry > base -1:
+                    next_digits.append(0)
+                else:
+                    next_digits.append(digit+carry)
+                    carry = 0
+            else:
+                next_digits.append(digit)
+                
+    next_digits.reverse()
     return next_digits

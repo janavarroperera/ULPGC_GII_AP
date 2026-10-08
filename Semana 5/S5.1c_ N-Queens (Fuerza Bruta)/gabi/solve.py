@@ -18,6 +18,38 @@ def solve(num_queens):
     solutions_list = []
 
     # solve it here!    
+    iterator = My_Iterator(num_queens, num_queens)
+    for candidate in iterator.next():
+        #for debugging
+        if candidate == [0, 2, 1, 3]:
+            print("OWO")
+        valid = True
+        set_candidate = set(candidate)
+        if len(set_candidate) != num_queens:
+            # Remove those in the same row
+            continue
+
+        # Check for diagonals
+        coordinates = []
+        for idx, queen in enumerate(candidate):
+            j = queen
+            i = idx
+            coordinates.append((i, j))
+
+        for i, coordinate in enumerate(coordinates):
+            i += 1
+            while i < len(coordinates):
+                if abs(coordinates[i][0] - coordinate[0]) == abs(coordinates[i][1] - coordinate[1]):
+                    valid = False
+                    break
+                i += 1
+            
+            
+        if valid:
+            solutions_list.append(list(candidate))
+            
+                
+                
 
 
     return solutions_list
