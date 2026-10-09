@@ -50,7 +50,7 @@ def solve(num_queens):
            for digit in range(0, num_queens):
                solution[level] = digit
                dfs(level+1)
-           #solution[level] = -1
+               solution[level] = -1
            return
 
    dfs(0)
