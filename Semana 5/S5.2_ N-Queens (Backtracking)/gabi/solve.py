@@ -1,4 +1,3 @@
-
 def solve(num_queens):
    """
    Using backtracking compute all the solutions to place the
@@ -13,7 +12,26 @@ def solve(num_queens):
    solutions_list = []
    # solve it here!
    def is_valid_solution(solution, level):
-       return True
+        placed = solution[:level]
+
+        if len(set(placed)) != len(placed):
+            return False
+
+        # Check for diagonals
+        coordinates = []
+        for idx, queen in enumerate(placed):
+            j = queen
+            i = idx
+            coordinates.append((i, j))
+
+        for i, coordinate in enumerate(coordinates):
+            i += 1
+            while i < len(coordinates):
+                if abs(coordinates[i][0] - coordinate[0]) == abs(coordinates[i][1] - coordinate[1]):
+                    return False
+                i += 1
+        return True
+
 
    solution = [-1] * num_queens
 
@@ -25,16 +43,17 @@ def solve(num_queens):
        # Si tengo todos los digitos de una solución, la proceso
        # y continúo el recorrido DFS.
        elif level == num_queens:
-           ...
+           solutions_list.append(solution.copy())
            return
        else:
            # Continúo con el recorrido en profundidad
-           for digit in solution:
+           for digit in range(0, num_queens):
                solution[level] = digit
                dfs(level+1)
-           solution[level] = -1
+               solution[level] = -1
            return
 
    dfs(0)
+
    
    return solutions_list
