@@ -2,18 +2,54 @@ import minigraph as nx
 
 
 def solve(input_list):
-    """Implementa la búsqueda de todas las rutas válidas de start a end.
 
-    input_list: lista de conexiones, por ejemplo ['start-A', 'A-end'].
-    Las cuevas pequeñas solo pueden visitarse una vez por ruta.
-    Las cuevas grandes pueden visitarse varias veces.
 
-    Devuelve (num_solutions, solutions_list): el número de rutas y una
-    lista de rutas, cada una representada como una lista de nombres de cuevas.
-    No imprimas los resultados; main.py se encarga de ordenarlos y mostrarlos.
-    """
-    
-    num_solutions = 0
+    """FUNCOIN RECURSIVA DFS"""
+    def dfs(solution):
+        if solution[-1] != "end":
+
+
+            for neighbor in G.neighbors(solution[-1]):
+                new_solution = solution.copy()
+                if (neighbor.islower() and neighbor in solution) or (neighbor == "start"):
+                    continue
+                new_solution.append(neighbor)
+                dfs(new_solution)
+            return
+
+        solutions_list.append(solution)
+        return
+        
+
     solutions_list = []
 
-    return num_solutions, solutions_list
+    # print(input_list)
+    
+    """LIMPIAR EL IMPUT"""
+    edge_list = []
+    for edge in input_list:
+        if edge[-1] == '\r':
+            edge_list.append(edge[:-1])
+        else:
+            edge_list.append(edge)
+    # print(edge_list)
+
+
+    """CREAR EL GRAFO"""
+    G = nx.Graph()
+    for edge in edge_list:
+        edge = edge.split("-")
+        G.add_edge(edge[0], edge[1])
+    # print(G.edges())
+
+    first_step = ["start"]
+
+    dfs(first_step)
+
+
+    
+
+
+    
+
+    return len(solutions_list), solutions_list
