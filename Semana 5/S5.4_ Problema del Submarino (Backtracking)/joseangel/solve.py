@@ -6,19 +6,20 @@ def solve(input_list):
 
     """FUNCOIN RECURSIVA DFS"""
     def dfs(solution):
-        if solution[-1] != "end":
-
-
-            for neighbor in G.neighbors(solution[-1]):
-                new_solution = solution.copy()
-                if (neighbor.islower() and neighbor in solution) or (neighbor == "start"):
-                    continue
-                new_solution.append(neighbor)
-                dfs(new_solution)
+        if solution[-1] == "end":
+            solutions_list.append(solution)
             return
 
-        solutions_list.append(solution)
+
+        for neighbor in G.neighbors(solution[-1]):
+            new_solution = solution.copy()
+            if (neighbor.islower() and neighbor in solution) or (neighbor == "start"):
+                continue
+            new_solution.append(neighbor)
+            dfs(new_solution)
         return
+
+        
         
 
     solutions_list = []
