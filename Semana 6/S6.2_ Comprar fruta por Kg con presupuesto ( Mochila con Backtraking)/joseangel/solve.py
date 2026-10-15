@@ -34,4 +34,67 @@ def solve(
 
     No debes leer datos ni imprimir mensajes en esta función.
     """
-    pass
+
+    def peso(solution):
+        peso = 0
+        for i, item in enumerate(solution):
+            if item == 1:
+                peso += items[i][1]
+        return peso
+
+    def valor(solution):
+        valor = 0
+        for i, item in enumerate(solution):
+            if item == 1:
+                valor += items[i][2]
+        return valor
+
+    def nombres(solution):
+        nombres = []
+        for i, item in enumerate(solution):
+            if item == 1:
+                nombres.append(items[i][0])
+        return sorted(nombres)
+
+    def is_valid_solution(solution):
+        if peso(solution) > budget: 
+            return False
+        else: 
+            return True
+
+    def dfs(solution, level):
+        nonlocal best_solution
+        
+        if is_valid_solution(solution) is False:
+            return
+
+        if (valor(solution) > valor(best_solution)):
+            best_solution = solution.copy()
+        elif (valor(solution) == valor(best_solution)) and (peso(solution) < peso(best_solution)):
+            best_solution = solution.copy()
+        elif (valor(solution) == valor(best_solution)) and (peso(solution) == peso(best_solution)) and (nombres(solution) < nombres(best_solution)):
+            best_solution = solution.copy()
+
+
+        if level == len(solution): return
+
+        for i in range(2):
+            new_solution = solution.copy()
+            new_solution[level] += i
+            dfs(new_solution, level + 1)
+        
+        pass
+
+    best_solution = [0] * len(items)
+    solution = [0] * len(items)
+
+    dfs(solution, 0)
+
+
+    best_set = nombres(best_solution)
+
+    final = (valor(best_solution), sorted(best_set))
+
+
+
+    return final
