@@ -6,7 +6,7 @@ from solve import solve
 
 # Para redirigir entrada en local, asigna un nombre de fichero.
 # test_file = "test1.txt"
-test_file = None
+test_file = "test.txt"
 input_source = open_test_file(test_file)
 
 # Normalización de salida:
