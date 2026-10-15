@@ -17,4 +17,47 @@ def solve(total: int, max10: int, max20: int, max50: int) -> tuple[int, int, int
     - Si no existe combinación válida, devuelve None.
     """
 
-    return None
+    if total <= 0 or total % 10 != 0:
+        return None
+    
+    
+
+    def sum_bills(bills):
+        return (bills[0] * 10) + (bills[1] * 20) + (bills[2] * 50)
+
+    final_bills = [0, 0, 0]
+
+    def greedy(bills:list) -> bool:
+        nonlocal final_bills
+        if sum_bills(bills) == total:
+            final_bills = bills
+            return True
+
+        if sum_bills(bills) + 50 <= total and bills[2] +1 <= max50:
+            bills_copy = bills.copy()
+            bills_copy[2] += 1
+            if greedy(bills_copy):
+                return True
+
+        if sum_bills(bills) + 20 <= total and bills[1] +1 <= max20:
+            bills_copy = bills.copy()
+            bills_copy[1] += 1
+            if greedy(bills_copy):
+                return True
+
+        if sum_bills(bills) + 10 <= total and bills[0] +1 <= max10:
+            bills_copy = bills.copy()
+            bills_copy[0] += 1
+            if greedy(bills_copy):
+                return True
+
+        return False
+
+
+
+    greedy([0, 0, 0])    # 10, 20, 50
+
+    if sum_bills(final_bills) != total:
+        return None
+    else:
+        return final_bills
