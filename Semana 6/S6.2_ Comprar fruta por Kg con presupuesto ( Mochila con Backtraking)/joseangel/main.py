@@ -3,7 +3,7 @@ from solve import solve
 
 
 # Ejemplo: "test1.txt" para pruebas locales
-TEST_FILE = None
+TEST_FILE = "test.txt"
 # TEST_FILE = "test1.txt"
 
 def read_nonempty_line(source):
