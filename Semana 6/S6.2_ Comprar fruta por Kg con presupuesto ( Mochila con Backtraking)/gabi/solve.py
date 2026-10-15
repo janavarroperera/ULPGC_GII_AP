@@ -34,4 +34,12 @@ def solve(
 
     No debes leer datos ni imprimir mensajes en esta función.
     """
-    pass
+
+    solution = [0, []]
+
+    def backpack(solution, level):
+        ...
+
+    
+
+    
