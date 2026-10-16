@@ -35,11 +35,59 @@ def solve(
     No debes leer datos ni imprimir mensajes en esta función.
     """
 
-    solution = [0, []]
+    solution = [0] * len(items)
+    best_solution = [0] * len(items)
+
+    def cost(solution):
+        total = 0
+        for i, item in enumerate(solution):
+            if item == 1:
+                total += items[i][1]
+        return total
+
+    def value(solution):
+        total = 0
+        for i, item in enumerate(solution):
+            if item == 1:
+                total += items[i][2]
+        return total
+
+    def names(solution):
+        name_list = []
+        for i, item in enumerate(solution):
+            if item == 1:
+                name_list.append(items[i][0])
+        return sorted(name_list)
+
+    def is_valid(solution):
+        if cost(solution) > budget:
+            return False
+        else:
+            return True
 
     def backpack(solution, level):
-        ...
+        nonlocal best_solution
+        if is_valid(solution) == False:
+            return
 
+        if (value(solution) > value(best_solution)):
+            best_solution = solution.copy()
+        elif (value(solution) == value(best_solution)) and (cost(solution) < cost(best_solution)):
+            best_solution = solution.copy()
+        elif (value(solution) == value(best_solution)) and (cost(solution) < cost(best_solution)) and (names(solution) < names(best_solution)):
+            best_solution = solution.copy()
+
+        if level == len(solution):
+            return
+
+
+        for i in range(2):
+            solution_copy = solution.copy()
+            solution_copy[level] += i
+            backpack(solution_copy, level+1)
+
+    backpack(solution, 0)
+
+    return (value(best_solution), names(best_solution))
     
-
     

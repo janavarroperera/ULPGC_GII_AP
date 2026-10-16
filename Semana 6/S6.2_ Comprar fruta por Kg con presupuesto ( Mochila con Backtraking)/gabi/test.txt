@@ -1,0 +1,5 @@
+4 8
+manzanas 3 6
+peras 3 5
+naranjas 2 6
+platanos 3 7
