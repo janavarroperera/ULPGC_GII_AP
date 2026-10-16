@@ -83,7 +83,6 @@ def solve(
             new_solution[level] += i
             dfs(new_solution, level + 1)
         
-        pass
 
     best_solution = [0] * len(items)
     solution = [0] * len(items)
