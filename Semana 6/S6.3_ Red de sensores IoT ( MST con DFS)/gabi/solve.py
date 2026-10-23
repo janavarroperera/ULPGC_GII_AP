@@ -1,4 +1,7 @@
-def kruskal_mst_dfs(G):
+import minigraph as nx
+import copy
+
+def kruskal_mst_dfs(G:nx.Graph):
     """
     Calcula MST con Kruskal detectando ciclos mediante DFS en grafo parcial.
 
@@ -32,4 +35,45 @@ def kruskal_mst_dfs(G):
       las gestiona `main.py`.
     """
 
-    return
+    def get_weight(edge):
+        return edge[2]
+
+    edges = []
+    length = 0
+    total_length = 0
+
+    for edge in G.edges():
+        total_length += edge[2]
+        edges.append(edge)
+    edges.sort(key=get_weight)
+
+    total_solutions = []
+
+    def path_exist(graph:nx.Graph, destination, solution:list):
+        if solution[-1] == destination:
+            total_solutions.append(solution)
+            return
+
+        for neighbor in graph.neighbors(solution[-1]):
+            if neighbor in solution:
+                continue
+            solution_copy = solution.copy()
+            solution_copy.append(neighbor)
+            path_exist(graph, destination, solution_copy)
+
+    mst:nx.Graph = nx.Graph()
+
+
+    for edge in edges:
+        mst_copy = copy.deepcopy(mst)
+        mst_copy.add_edge(edge[0], edge[1], edge[2])
+        total_solutions.clear()
+        path_exist(mst_copy, edge[1], [edge[0]])
+
+        if len(total_solutions) > 1:
+            continue
+        else:
+            length += edge[2]
+            mst.add_edge(edge[0], edge[1], weight=edge[2])
+    
+    return mst.edges(data=True), length, total_length
