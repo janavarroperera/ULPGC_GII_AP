@@ -75,5 +75,8 @@ def kruskal_mst_dfs(G:nx.Graph):
         else:
             length += edge[2]
             mst.add_edge(edge[0], edge[1], weight=edge[2])
+
+    if mst.number_of_nodes() != len(G.nodes()):
+        return None
     
     return mst.edges(data=True), length, total_length
