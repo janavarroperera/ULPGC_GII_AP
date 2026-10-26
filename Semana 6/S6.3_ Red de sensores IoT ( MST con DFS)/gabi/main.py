@@ -2,7 +2,7 @@ from utils import open_test_file, close_test_file, get_line
 from minigraph import MiniGraph
 from solve import kruskal_mst_dfs
 
-TEST_FILE = None  # Cambiar a "test1.txt" para depurar localmente
+TEST_FILE = "test.txt"  # Cambiar a "test1.txt" para depurar localmente
 
 def read_tokens(source):
     # Lee la siguiente línea no vacía como lista de tokens
@@ -42,7 +42,7 @@ try:
         mst, mst_length, total_length = res
         print("MST:")
         for (u, v, w) in mst:
-            print(f"{u} {v} {w}")
+            print(f"{u} {v} {w["weight"]}")
         print(f"MST_length={mst_length}")
         # Última línea sin salto final; longitudes expresadas en metros
         print(f"Total_length={total_length}", end="")
