@@ -1,35 +1,31 @@
+import minigraph as nx
+import copy 
+
+def tiene_bucle(arbol):
+  pass
+
 def kruskal_mst_dfs(G):
-    """
-    Calcula MST con Kruskal detectando ciclos mediante DFS en grafo parcial.
+  # print(G.edges())
 
-    Parámetros
-    ----------
-    G : minigraph.MiniGraph
-        Grafo no dirigido ponderado que devuelve:
-        - `G.nodes()` lista de pares (nodeid, data).
-        - `G.edges()` tuplas (u, v, label, data, directed), con `label` = longitud en metros.
+  ordered_edges = G.edges().copy()
 
-    Retorna
-    -------
-    tuple | None
-        (mst_edges, mst_length, total_length) si grafo es conexo y existe MST.
-        None si el grafo no es conexo.
+  ordered_edges = sorted(ordered_edges, key = lambda edge: edge[2])
 
-    Detalles de implementación
-    --------------------------
-    - Orden determinista: ordenar aristas por (w, a, b), con `a <= b`.
-    - Detección de ciclo: antes de añadir arista (u, v, w),
-      realizar DFS sobre grafo PARCIAL y si ya hay camino u->v,
-      descartar arista para evitar ciclo.
-    - Al añadir al MST, registrar (a, b, w) con `a <= b` y w en metros.
-    - Devolver también `mst_length` (longitud total del cable del MST)
-      y `total_length` (suma de las longitudes de todas las conexiones del grafo),
-      ambas en metros.
+  # print(ordered_edges)
 
-    Nota
-    ----
-    - La lectura de entrada y la generación de la salida exacta
-      las gestiona `main.py`.
-    """
+  arbol_temporal = nx.Graph()
+  arbol_temporal.add_node(ordered_edges[0][0])
 
-    return
+  arbol_final = copy.deepcopy(arbol_temporal)
+
+  for edge in ordered_edges[1:]:
+    arbol_temporal.add_edge(edge)
+    if tiene_bucle(arbol_temporal) == True:
+      arbol_temporal = copy.deepcopy(arbol_final)
+      continue
+    arbol_final.add_edge(edge)
+    arbol_temporal = copy.deepcopy(arbol_final)
+    
+
+
+  return
