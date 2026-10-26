@@ -2,7 +2,7 @@ from utils import open_test_file, close_test_file, get_line
 from minigraph import MiniGraph
 from solve import kruskal_mst_dfs
 
-TEST_FILE = None  # Cambiar a "test1.txt" para depurar localmente
+TEST_FILE = "test.txt" 
 
 def read_tokens(source):
     # Lee la siguiente línea no vacía como lista de tokens
