@@ -1,31 +1,51 @@
 import minigraph as nx
 import copy 
+import simple_stack as stack
 
-def tiene_bucle(arbol):
-  pass
+def tiene_camino(arbol, edge):
+  pila = stack.Stack()
+
+ 
+
+  visitados = [edge[0]]
+  pila.push(edge[0])
+
+  while pila.isEmpty() is False:
+    nodo = pila.pop()
+    for neighbor in arbol.neighbors(nodo):
+      if neighbor not in visitados:
+        visitados.append(neighbor)
+        pila.push(neighbor)
+
+  if edge[1] in visitados:
+    return True
+  else:
+    return False
 
 def kruskal_mst_dfs(G):
-  # print(G.edges())
-
   ordered_edges = G.edges().copy()
 
   ordered_edges = sorted(ordered_edges, key = lambda edge: edge[2])
 
-  # print(ordered_edges)
+  arbol = nx.Graph()
 
-  arbol_temporal = nx.Graph()
-  arbol_temporal.add_node(ordered_edges[0][0])
+  mst = []
+  mst_length = 0
 
-  arbol_final = copy.deepcopy(arbol_temporal)
-
-  for edge in ordered_edges[1:]:
-    arbol_temporal.add_edge(edge)
-    if tiene_bucle(arbol_temporal) == True:
-      arbol_temporal = copy.deepcopy(arbol_final)
+  for edge in ordered_edges:
+    if tiene_camino(arbol, edge) == True:
       continue
-    arbol_final.add_edge(edge)
-    arbol_temporal = copy.deepcopy(arbol_final)
-    
+    arbol.add_edge(edge[0], edge[1], edge[2])
+    a, b = min(edge[0], edge[1]), max(edge[0], edge[1])
+    mst.append((a, b, edge[2]))
+    mst_length += edge[2]
+
+  print(arbol.edges())
+
+  if len(mst) != len(G.nodes()) - 1:
+    return None
+
+  total_length = sum(edge[2] for edge in ordered_edges)
 
 
-  return
+  return mst, mst_length, total_length

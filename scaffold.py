@@ -16,12 +16,13 @@ los .py y el enunciado (.md) uno a uno:
 
 MODO 3 - Detección automática: busca en cada carpeta "Semana N" pares
 de un .zip y un .md que compartan el mismo prefijo (aunque el resto del
-nombre no coincida). Se aceptan varios formatos de prefijo y se
-normalizan para que casen entre sí:
+nombre no coincida). Se aceptan varios formatos de prefijo, en mayúsculas
+o minúsculas, y se normalizan para que casen entre sí:
 
-    S1a_  S12b_  S5.1a_  S5_1a_  S5.2_  S5_2_
+    S1a_  S12b_  S5.1a_  S5_1a_  S8.1.b_  S5.2_  S5_2_  S8.2<espacio>
 
-p. ej. "S5.1a_ Siguiente número.zip" y "S5_1a_siguiente_numero.md".
+p. ej. "S5.1a_ Siguiente número.zip" y "S5_1a_siguiente_numero.md",
+o "S8.1.b_ Branch and bound.zip" y "s8_1b_dfs_arbol.md".
 Para cada par:
 
     - crea la carpeta del ejercicio con el mismo nombre que el .zip
@@ -47,11 +48,15 @@ from pathlib import Path
 # Cambia esto si en algún momento cambian las personas del grupo
 PERSONAS = ["gabi", "joseangel"]
 
-# Prefijo del ejercicio. Acepta, entre otros:
-#   S1a_, S12b_, S5.1a_, S5_1a_, S5.2_, S5_2_
+# Prefijo del ejercicio. Estructura:
+#   S<semana> [ (.|_)<subnúmero> ] [ (.|_)?<letra> ]  seguido de "_" o espacio
+# Ejemplos válidos: S1a_, S12b_, S5.1a_, S5_1a_, S8.1.b_, S5.2_, S8.2 (espacio)
 # Es lo único que tiene que coincidir entre el zip y el md de un mismo
-# ejercicio (tras normalizar "." -> "_" y pasar a minúsculas).
-PREFIJO_RE = re.compile(r"^(S\d+(?:[._]\d+)?[a-zA-Z]*)_")
+# ejercicio (se normaliza a minúsculas y con "_" entre semana y subnúmero).
+PREFIJO_RE = re.compile(
+    r"^S(\d+)(?:[._](\d+))?(?:[._]?([a-z]))?(?=[_\s])",
+    re.IGNORECASE,
+)
 
 
 def _crear_test(carpeta_persona: Path):
@@ -109,14 +114,23 @@ def crear_ejercicio(semana: int, letra: str, nombre: str, archivos: list,
 def _prefijo(nombre_archivo: str):
     """Devuelve la clave normalizada del prefijo, o None si no tiene.
 
-    "S5.1a_ Siguiente número.zip" -> "s5_1a"
-    "S5_1a_siguiente_numero.md"   -> "s5_1a"
-    "S1a_ Manejo de arrays.zip"   -> "s1a"
+    "S8.1.b_ Branch and bound.zip"  -> "s8_1b"
+    "s8_1b_dfs_arbol.md"            -> "s8_1b"
+    "S8.2 Asignación.zip"           -> "s8_2"
+    "s8_2_asignacion.md"            -> "s8_2"
+    "S5.1a_ Siguiente número.zip"   -> "s5_1a"
+    "S1a_ Manejo de arrays.zip"     -> "s1a"
     """
     m = PREFIJO_RE.match(nombre_archivo)
     if not m:
         return None
-    return m.group(1).replace(".", "_").lower()
+    semana, sub, letra = m.groups()
+    clave = f"s{semana}"
+    if sub:
+        clave += f"_{sub}"
+    if letra:
+        clave += letra.lower()
+    return clave
 
 
 def _procesar_par(zip_path: Path, md_path: Path, carpeta_semana: Path):
