@@ -1,3 +1,4 @@
-3 1
-MCU A B
-A B 3
+4 2
+MCU A B C
+MCU A 3
+B C 5
