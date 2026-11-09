@@ -4,7 +4,16 @@ Item = namedtuple("Item", ['index', 'value', 'weight'])
 
 class Node:
     def __init__(self, index, taken, value, room):
-        return
+        self.index = index
+        self.taken = taken
+        self.value = value
+        self.room = room
 
     def estimate(self, items):
-        return 0
+        estimate = self.value
+
+        for item in items[self.index:]:
+            estimate += item.value
+
+        
+        return estimate
