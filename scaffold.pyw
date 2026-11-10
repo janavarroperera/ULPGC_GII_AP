@@ -34,14 +34,18 @@ Para cada par:
     - borra el .zip y el .md originales
 
     python scaffold.py auto
+    (o simplemente doble clic, sin argumentos: lo hace solo y avisa con una ventana)
 
-Ejecuta el script desde la raíz del repo (donde están las carpetas
+Deja el script en la raíz del repo (donde están las carpetas
 "Semana N").
 """
 
 import argparse
+import contextlib
+import io
 import re
 import shutil
+import sys
 import zipfile
 from pathlib import Path
 
@@ -217,8 +221,10 @@ def main():
 
     sub.add_parser("auto", help="Detectar pares zip+md por prefijo y montar la estructura")
 
-    args = parser.parse_args()
-    base = Path(".")
+    # Sin argumentos (doble clic o botón ▶ de VS Code) -> modo "auto"
+    args = parser.parse_args(sys.argv[1:] or ["auto"])
+    # Siempre trabaja sobre la carpeta donde está guardado el script
+    base = Path(__file__).resolve().parent
 
     if args.comando == "semanas":
         crear_semanas(args.inicio, args.fin, base)
@@ -228,5 +234,29 @@ def main():
         procesar_auto(base)
 
 
+def _aviso(texto: str):
+    """Muestra una ventanita con el resultado (sin consola)."""
+    try:
+        import tkinter
+        from tkinter import messagebox
+        raiz = tkinter.Tk()
+        raiz.withdraw()
+        raiz.attributes("-topmost", True)
+        messagebox.showinfo("scaffold", texto.strip() or "Nada que procesar.")
+        raiz.destroy()
+    except Exception:
+        print(texto)
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 1:
+        # Doble clic: hace "auto" solo y avisa con una ventanita al acabar
+        salida = io.StringIO()
+        with contextlib.redirect_stdout(salida):
+            try:
+                main()
+            except Exception as e:
+                print(f"✗ Error: {e}")
+        _aviso(salida.getvalue())
+    else:
+        main()
