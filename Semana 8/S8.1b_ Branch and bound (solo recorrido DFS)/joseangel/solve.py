@@ -27,14 +27,14 @@ def solve_branch_and_bound_DFS(capacity, items, record_visiting_order = False):
     #    parámetros taken, value, room, con lo que se inicializan con
     #    lista vacía y 0). El único valor necesario en el nodo es el
     #    indice al primer elemento de la lista (index = 0).
-    # ...
+    nodo_raiz = Node(0, [], 0, 0)
 
     # Lo añadimos a la lista de nodos vivos (alive)
-    # ...
+    alive.append(nodo_raiz)
 
     # Mientras haya nodos en la lista de nodos vivos
     # ...
-    while True:  #sustituir el True por la condición que considere más adecuada
+    while alive != []:   
         
         # Avanzamos al siguiente nodo de nuestro recorrido DFS (hacemos un pop
         # de la lista) y lo registramos en nuestro recorrido DFS.
@@ -44,8 +44,10 @@ def solve_branch_and_bound_DFS(capacity, items, record_visiting_order = False):
             visiting_order.append(current.index)
 
         # Si no hemos llegado al final del árbol
+        if current.index != len(items):
         #    1) Ramificamos (branch) por la derecha (append)
+            alive.append(Node(current.index + 1, [], 0, 0))
         #    2) Ramificamos (branch) por la izquierda (append)
-        # ...
+            alive.append(Node(current.index + 1, [], 0, 0))
 
     return 0, [], visiting_order
