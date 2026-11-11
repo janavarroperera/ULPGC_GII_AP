@@ -1,5 +1,7 @@
-var 0..10: x;
+  int: n;
+  array[1..n] of var 0..9: x;
+  
+  constraint sum(x) == product(x);
 
-constraint x mod 4 = 0;
-
-solve minimize (x - 7) * (x - 7)
+  
+  solve satisfy;
