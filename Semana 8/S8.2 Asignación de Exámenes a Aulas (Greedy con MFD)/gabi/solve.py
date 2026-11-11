@@ -28,5 +28,25 @@ def solve_mfd_feasible(exams: List[int], rooms: List[int]):
   """
 
   # Valor por defecto: indicar que no hay solución.
-  return None
+  rooms.sort(reverse=True)
+  exams.sort(reverse=True)
+  print(rooms)
+  print(exams)
+
+  assigned_exams = []
+  asigned_rooms = {}
+  waste = 0
+
+  for room in rooms:
+    for exam in exams:
+      if exam <= room and exam not in assigned_exams:
+        asigned_rooms[room] = exam
+        assigned_exams.append(exam)
+        waste += abs(room - exam)
+        break
+
+  if len(assigned_exams) != len(exams):
+    return None
+
+  return len(asigned_rooms), waste, asigned_rooms.keys()
 

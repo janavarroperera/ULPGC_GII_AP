@@ -3,7 +3,7 @@ from utils import open_test_file, close_test_file, get_line
 from solve import solve_mfd_feasible
 
 # test_file = "test1.txt"
-test_file = None
+test_file = "test.txt"
 input_source = open_test_file(test_file)
 
 first = get_line(input_source).strip()
