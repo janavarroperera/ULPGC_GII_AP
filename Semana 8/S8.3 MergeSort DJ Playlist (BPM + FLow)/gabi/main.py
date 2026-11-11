@@ -1,7 +1,7 @@
 from utils import open_test_file, close_test_file, get_line
 from solve import sort_playlist_by_flow
 
-TEST_FILE = None  # Cambiar a "test1.txt" para pruebas locales
+TEST_FILE = "test.txt"  # Cambiar a "test1.txt" para pruebas locales
 
 
 inp = open_test_file(TEST_FILE)
