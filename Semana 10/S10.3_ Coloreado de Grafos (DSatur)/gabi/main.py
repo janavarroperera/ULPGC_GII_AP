@@ -5,7 +5,7 @@ from solve import solve_dsat_coloring
 
 # Para redirigir entrada en local, asigna nombre de fichero.
 # test_file = "test1.txt"
-test_file = None
+test_file = "test.txt"
 input_source = open_test_file(test_file)
 
 first_line = get_line(input_source).split()
