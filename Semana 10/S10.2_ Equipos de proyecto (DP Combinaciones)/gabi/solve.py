@@ -24,6 +24,27 @@ def build_pascal_table_k(n: int, k: int) -> List[List[int]]:
     # Inicializa estructura de tabla vacía
     table: List[List[int]] = []
 
+    i = 0
+    truncating = False
+
+    while i <= n:
+        row = []
+
+        j = 0
+        while j <= min(k, i):
+            if (j == 0) or (j == i) or (truncating == True and j == k+1):
+                row.append(1)
+            else:
+                row.append(table[i-1][j-1] + table[i-1][j])
+            j += 1
+        i += 1
+        if len(row) >= k:
+            table.append(row[:k+1])
+            truncating = True
+        else:
+          table.append(row)
+                
+
     # Devuelve tabla completa
     return table
     
@@ -41,7 +62,13 @@ def solve_project_teams(n: int, k: int) -> Tuple[int, List[List[int]]]:
     # 1. Validar casos base
     # 2. Construir tabla DP: Tabla de Pascal (hasta n limitado por k)
     # 3. Extraer resultado C(n,k) desde tabla
+    if (k == 0) or (k == n):
+        teams = 1
+
+    if (k < 0) or (k > n):
+        return 0, [[]]
+    table = build_pascal_table_k(n, k)
     
 
     # 4. Devuelve número de equipos y tabla completa
-    return teams, table
+    return table[n][k], table
