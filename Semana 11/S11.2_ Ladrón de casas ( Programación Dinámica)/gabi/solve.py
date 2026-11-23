@@ -45,8 +45,9 @@ def solve_tabulation(items):
 
 
 def solve_memoization(items):
-    mem = {}
     taken = []
+    mem = {}
+
 
     def t(n):
         # Primera fase: Calculamos la recurrencia guardando en
@@ -54,7 +55,11 @@ def solve_memoization(items):
         # ...
         #   Aviso: Para resolver este ejercicio no es valido
         #          utilizar el soporte de @functools
-        return 0
+        if (n in mem):
+            return mem[n]
+        else:
+            mem[n] = max((t(n-2) + items[n]), t(n-1))
+            return mem[n]
 
     def fill_taken():
         # Segunda fase: Rellenamos la lista 'taken' con el
@@ -65,9 +70,20 @@ def solve_memoization(items):
         # ...
         return
 
-    n = len(items) - 1    
+    n = len(items) - 1   
+
+    if n == 0:
+        return items[n], 0
+    elif n == 1:
+        return max(items[n], items[n-1]), 0
+    
+    mem[0] = items[0]
+    mem[1] = max(items[0], items[1])
+     
     
     max_benefit = t(n)
+    print(max_benefit)
+
     fill_taken()
     
     return 0, taken
