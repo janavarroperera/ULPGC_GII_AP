@@ -26,16 +26,16 @@ def solve_tabulation(items):
         # transparencias el contenido de esta lista es: [2,5]
         # (la segunda casa y la quinta casa).
         # ...
-        taken.append(0)
-        last_value = -1
-        taken_index = 0
-        for i, value in enumerate(table):
-            if last_value == value:
-                taken_index += 1
-                taken.append(0)
-            last_value = value
-            taken[taken_index] = i+1
+        i = len(table) -1
+        while i >= 0:
+            a = table[i-1] if i >= 1 else 0
+            if table[i] == a:
+                i -= 1
+            else:
+                taken.append(i+1)
+                i -= 2
 
+        taken.reverse()
         return
         
     fill_table()

@@ -1,9 +1,11 @@
-
 import numpy as np
+
+# t(n) = 
 
 def solve_tabulation(items, capacity):
     taken = []
     table = np.zeros((len(items)+1,capacity+1), dtype=int)
+    print(table)
 
     def fill_table():
         return
