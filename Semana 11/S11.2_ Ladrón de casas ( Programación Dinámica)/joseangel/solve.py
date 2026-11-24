@@ -18,15 +18,16 @@ def solve_tabulation(items):
         return
         
     def fill_taken():
-        for i, valor in enumerate(table):
-            if taken == []:
-                taken.append(i + 1)
+        i = len(table) - 1
+        while i >= 0:
+            if table[i] > table[i-1]:
+                taken.append(i)
+                i -= 2
+            elif table[i] == table[i-1]:
+                i -= 1
             else:
-                if table[i] > table[i-1]:
-                    del taken[-1]
-                    taken.append(i + 1)
-                elif table[i] == table[i-1]:
-                    taken.append(i + 2)
+                taken.append(i)
+        sorted(taken)
         return
     
         
