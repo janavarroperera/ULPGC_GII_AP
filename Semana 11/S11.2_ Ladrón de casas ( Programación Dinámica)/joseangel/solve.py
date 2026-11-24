@@ -20,14 +20,13 @@ def solve_tabulation(items):
     def fill_taken():
         i = len(table) - 1
         while i >= 0:
-            if table[i] > table[i-1]:
-                taken.append(i)
-                i -= 2
-            elif table[i] == table[i-1]:
+            a = table[i-1] if i >= 1 else 0
+            if table[i] == a:
                 i -= 1
             else:
-                taken.append(i)
-        sorted(taken)
+                taken.append(i+1)
+                i -= 2
+        taken.reverse()
         return
     
         
@@ -60,13 +59,15 @@ def solve_memoization(items):
         return 0
 
     def fill_taken():
-        # Segunda fase: Rellenamos la lista 'taken' con el
-        # indice de las casas elegidas por el ladrón para
-        # obtener el máximo beneficio. En el ejemplo de las
-        # transparencias el contenido de esta lista es: [2,5]
-        # (la segunda casa y la quinta casa).
-        # ...
-        return
+        i = n
+        while i >= 0:
+            sin = t(i - 1) if i >= 1 else 0
+            if t(i) == sin:
+                i -= 1
+            else:
+                taken.append(i + 1)
+                i -= 2
+        taken.reverse()
 
     
     max_benefit = t(n)
