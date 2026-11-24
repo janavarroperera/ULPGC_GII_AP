@@ -12,6 +12,11 @@ def solve_tabulation(items):
         # soluciones de todos los subproblemas (o sea, los
         # beneficios que puede conseguir el ladrón).
         # ...
+        for i, house in enumerate(items):
+            if (i < 2):
+                table.append(house)
+                continue
+            table.append(max((table[i-2] + items[i]), table[i-1]))
         return
         
     def fill_taken():
@@ -21,17 +26,28 @@ def solve_tabulation(items):
         # transparencias el contenido de esta lista es: [2,5]
         # (la segunda casa y la quinta casa).
         # ...
+        taken.append(0)
+        last_value = -1
+        taken_index = 0
+        for i, value in enumerate(table):
+            if last_value == value:
+                taken_index += 1
+                taken.append(0)
+            last_value = value
+            taken[taken_index] = i+1
+
         return
         
     fill_table()
     fill_taken()
-    return 0, taken
+    return table[taken[-1]-1], taken
     
 
 
 def solve_memoization(items):
-    mem = {}
     taken = []
+    mem = {}
+
 
     def t(n):
         # Primera fase: Calculamos la recurrencia guardando en
@@ -39,7 +55,11 @@ def solve_memoization(items):
         # ...
         #   Aviso: Para resolver este ejercicio no es valido
         #          utilizar el soporte de @functools
-        return 0
+        if (n in mem):
+            return mem[n]
+        else:
+            mem[n] = max((t(n-2) + items[n]), t(n-1))
+            return mem[n]
 
     def fill_taken():
         # Segunda fase: Rellenamos la lista 'taken' con el
@@ -50,9 +70,20 @@ def solve_memoization(items):
         # ...
         return
 
-    n = len(items) - 1    
+    n = len(items) - 1   
+
+    if n == 0:
+        return items[n], 0
+    elif n == 1:
+        return max(items[n], items[n-1]), 0
+    
+    mem[0] = items[0]
+    mem[1] = max(items[0], items[1])
+     
     
     max_benefit = t(n)
+    print(max_benefit)
+
     fill_taken()
     
     return 0, taken

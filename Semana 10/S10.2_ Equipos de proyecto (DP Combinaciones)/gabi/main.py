@@ -1,7 +1,7 @@
 from utils import open_test_file, close_test_file, get_line
 from solve import solve_project_teams
 
-TEST_FILE = None  # Cambia a 'test1.txt' para depurar
+TEST_FILE = "test.txt"  # Cambia a 'test1.txt' para depurar
 
 inp = open_test_file(TEST_FILE)
 first = get_line(inp)
