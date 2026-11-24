@@ -8,7 +8,7 @@
 
 from utils import *
 
-test_file    = None
+test_file    = "test.txt"
 input_source = open_test_file (test_file)
 
 # ----------------------------------------------------------------
@@ -24,7 +24,6 @@ for i in range(1, item_count+1):
 
 # Comenzamos programando la recurrencia mediante tabulation
 value1, taken1 = solve_tabulation(items)
-#value1, taken1 = solve_tabulation_alt(items)
 print(value1)
 print(taken1)
 
