@@ -4,41 +4,58 @@
 #    t(n) = 0		               : si n<0
 
 def solve_tabulation(items):
-    table = []
+    table = [0] * len(items) 
     taken = []
     
     def fill_table():
-        # Primera fase: Rellenamos la lista 'table' con las
-        # soluciones de todos los subproblemas (o sea, los
-        # beneficios que puede conseguir el ladrón).
-        # ...
+        for i, valor in enumerate(table):
+            if i == 0: #casos base
+                table[i] = items[i]
+            elif i == 1:
+                table[i] = max(items[i], items[i-1])
+            else:
+                table[i] = max(table[i-2] + items[i], table[i-1])
         return
         
     def fill_taken():
-        # Segunda fase: Rellenamos la lista 'taken' con el
-        # indice de las casas elegidas por el ladrón para
-        # obtener el máximo beneficio. En el ejemplo de las
-        # transparencias el contenido de esta lista es: [2,5]
-        # (la segunda casa y la quinta casa).
-        # ...
+        for i, valor in enumerate(table):
+            if taken == []:
+                taken.append(i + 1)
+            else:
+                if table[i] > table[i-1]:
+                    del taken[-1]
+                    taken.append(i + 1)
+                elif table[i] == table[i-1]:
+                    taken.append(i + 2)
         return
+    
         
     fill_table()
     fill_taken()
-    return 0, taken
+    return table[-1], taken
     
 
 
 def solve_memoization(items):
-    mem = {}
+
+    n = len(items) - 1    
+    if n == 0:
+        return items[0]
+    if n == 1:
+        return max(items[0], items[1])
+    
+    mem = {0: items[0],
+           1: max(items[0], items[1])}
     taken = []
 
-    def t(n):
-        # Primera fase: Calculamos la recurrencia guardando en
-        # el diccionario la solución optima de cada subproblema.
-        # ...
-        #   Aviso: Para resolver este ejercicio no es valido
-        #          utilizar el soporte de @functools
+    def t(i):
+        if i in mem:
+            return mem[i]
+        else:
+            mem[i] = max(items[i] + t(i -2), t(i - 1))
+            return mem[i]
+            
+
         return 0
 
     def fill_taken():
@@ -50,10 +67,9 @@ def solve_memoization(items):
         # ...
         return
 
-    n = len(items) - 1    
     
     max_benefit = t(n)
     fill_taken()
     
-    return 0, taken
+    return max_benefit, taken
 
